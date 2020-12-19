@@ -1,6 +1,6 @@
 CC=gcc
 # enhance a program until there are no error messages any more
-CFLAGS = -std=c11 -Wpedantic -Wall -Wconversion -Werror=vla -Wextra -c -O0
+CFLAGS = -std=c11 -Wpedantic -Wall -Wconversion -Werror=vla -Wextra -c -O2
 LDFLAGS = -Wpedantic -Wall -o
 PROGNAME = udp_client
 

@@ -58,15 +58,31 @@ int main(int argc, char *argv[])
 	printf("Client source port: %d\n", ntohs(client_address.sin_port));
 
 	const char *message = "It works!";
+	char buffer[BUFFER_SIZE] = "\0";
+	socklen_t server_address_length = sizeof(server_address);
 	for (;;)
 	{
 		sendto
 		(
 			socket_file_descriptor,
 			message, strlen(message), MSG_CONFIRM,
-			(const struct sockaddr *) &server_address, sizeof(struct sockaddr)
+			(const struct sockaddr *) &server_address, server_address_length
 		);
 		printf("Sent message '%s'\n", message);
+		ssize_t received_bytes = recvfrom
+		(
+			socket_file_descriptor,
+			(char *) buffer, strlen(message), MSG_WAITALL,
+			(struct sockaddr *) &server_address, &server_address_length
+		);
+		if (received_bytes < BUFFER_SIZE)
+		{
+			buffer[received_bytes] = '\0';
+		}
+		else
+		{
+			buffer[BUFFER_SIZE - 1] = '\0';
+		}
 		sleep(DELAY_BETWEEN_MESSAGES);
 	}
 

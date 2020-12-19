@@ -83,7 +83,6 @@ int main(int argc, char *argv[])
 		{
 			buffer[BUFFER_SIZE - 1] = '\0';
 		}
-		sleep(DELAY_BETWEEN_MESSAGES);
 	}
 
 	close(socket_file_descriptor);
